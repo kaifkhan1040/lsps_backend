@@ -7,7 +7,7 @@ class BannerSlideSerializer(serializers.ModelSerializer):
     class Meta:
         model = BannerSlide
         fields = [
-            "id", "title", "subtitle", "image",
+            "id", "title", "subtitle", "file",
             "cta_type", "cta_text", "cta_link", "order",
         ]
 
