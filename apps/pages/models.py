@@ -80,7 +80,8 @@ class PrincipalMessage(SingletonModel):
     name = models.CharField(max_length=150, default="Principal")
     designation = models.CharField(max_length=150, default="Principal")
     photo = models.ImageField(upload_to="pages/principal/", blank=True, null=True)
-    message = models.TextField(blank=True)
+    short_message = models.TextField(help_text="Short excerpt shown on the Home page.")
+    full_message = models.TextField(help_text="Full message shown on the About Us page.")
 
     class Meta:
         verbose_name = "Principal's Message"

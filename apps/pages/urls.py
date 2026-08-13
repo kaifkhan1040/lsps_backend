@@ -10,6 +10,7 @@ from apps.pages.views import (
 
 router = DefaultRouter()
 router.register("highlights", SchoolHighlightViewSet, basename="school-highlight")
+# router.register("home", HomeContentView, basename="school-homecontent")
 router.register("why-choose-us", WhyChooseUsViewSet, basename="why-choose-us")
 router.register("quick-links", QuickLinkViewSet, basename="quick-link")
 

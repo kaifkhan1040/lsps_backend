@@ -21,7 +21,7 @@ class ChairmanMessageSerializer(serializers.ModelSerializer):
 class PrincipalMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrincipalMessage
-        fields = ["name", "designation", "photo", "message"]
+        fields = ["name", "designation", "photo", "short_message", "full_message"]
 
 
 class AboutUsSerializer(serializers.ModelSerializer):
