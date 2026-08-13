@@ -13,6 +13,9 @@ class SingletonAdminMixin:
     def has_delete_permission(self, request, obj=None):
         return False
 
+class SingletonAdminMixin1:
+    def has_add_permission(self, request):
+        return not self.model.objects.exists()
 
 @admin.register(HomeContent)
 class HomeContentAdmin(SingletonAdminMixin, admin.ModelAdmin):
@@ -20,12 +23,12 @@ class HomeContentAdmin(SingletonAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(ChairmanMessage)
-class ChairmanMessageAdmin(SingletonAdminMixin, admin.ModelAdmin):
+class ChairmanMessageAdmin(SingletonAdminMixin1, admin.ModelAdmin):
     pass
 
 
 @admin.register(PrincipalMessage)
-class PrincipalMessageAdmin(SingletonAdminMixin, admin.ModelAdmin):
+class PrincipalMessageAdmin(SingletonAdminMixin1, admin.ModelAdmin):
     pass
 
 
@@ -48,8 +51,8 @@ class WhyChooseUsAdmin(admin.ModelAdmin):
     search_fields = ("title",)
 
 
-@admin.register(QuickLink)
-class QuickLinkAdmin(admin.ModelAdmin):
-    list_display = ("title", "url", "order", "is_active")
-    list_editable = ("order", "is_active")
-    search_fields = ("title",)
+# @admin.register(QuickLink)
+# class QuickLinkAdmin(admin.ModelAdmin):
+#     list_display = ("title", "url", "order", "is_active")
+#     list_editable = ("order", "is_active")
+#     search_fields = ("title",)

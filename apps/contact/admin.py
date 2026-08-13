@@ -5,25 +5,25 @@ from apps.contact.models import (
 )
 
 
-@admin.register(ContactDetail)
-class ContactDetailAdmin(admin.ModelAdmin):
-    def has_add_permission(self, request):
-        return not ContactDetail.objects.exists()
+# @admin.register(ContactDetail)
+# class ContactDetailAdmin(admin.ModelAdmin):
+#     def has_add_permission(self, request):
+#         return not ContactDetail.objects.exists()
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
-
-@admin.register(PhoneNumber)
-class PhoneNumberAdmin(admin.ModelAdmin):
-    list_display = ("number", "label", "order", "is_active")
-    list_editable = ("order", "is_active")
+#     def has_delete_permission(self, request, obj=None):
+#         return False
 
 
-@admin.register(SocialMediaLink)
-class SocialMediaLinkAdmin(admin.ModelAdmin):
-    list_display = ("platform", "url", "order", "is_active")
-    list_editable = ("order", "is_active")
+# @admin.register(PhoneNumber)
+# class PhoneNumberAdmin(admin.ModelAdmin):
+#     list_display = ("number", "label", "order", "is_active")
+#     list_editable = ("order", "is_active")
+
+
+# @admin.register(SocialMediaLink)
+# class SocialMediaLinkAdmin(admin.ModelAdmin):
+#     list_display = ("platform", "url", "order", "is_active")
+#     list_editable = ("order", "is_active")
 
 
 @admin.register(ContactMessage)
