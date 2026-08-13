@@ -98,7 +98,7 @@ class PrincipalMessage(SingletonModel):
     
                     # If a new file is uploaded, delete the old file
                     if (
-                        old_instance.welcomphotoe_image
+                        old_instance.photo
                         and old_instance.photo != self.photo
                     ):
                         old_instance.photo.delete(save=False)
