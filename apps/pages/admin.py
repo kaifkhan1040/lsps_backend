@@ -13,22 +13,18 @@ class SingletonAdminMixin:
     def has_delete_permission(self, request, obj=None):
         return False
 
-class SingletonAdminMixin1:
-    def has_add_permission(self, request):
-        return not self.model.objects.exists()
-
 @admin.register(HomeContent)
 class HomeContentAdmin(SingletonAdminMixin, admin.ModelAdmin):
     pass
 
 
 @admin.register(ChairmanMessage)
-class ChairmanMessageAdmin(SingletonAdminMixin1, admin.ModelAdmin):
+class ChairmanMessageAdmin(SingletonAdminMixin, admin.ModelAdmin):
     pass
 
 
 @admin.register(PrincipalMessage)
-class PrincipalMessageAdmin(SingletonAdminMixin1, admin.ModelAdmin):
+class PrincipalMessageAdmin(SingletonAdminMixin, admin.ModelAdmin):
     pass
 
 
