@@ -70,3 +70,33 @@ class AdmissionPopupSettings(SingletonModel):
 
     def __str__(self):
         return "Admission Popup Settings"
+
+class PopUpWindow(SingletonModel):
+    "pop-up window images"
+    image = models.ImageField(upload_to="sliders/popup/", blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+            # Get the existing database record before saving the new one
+            if self.pk:
+                try:
+                    old_instance = type(self).objects.get(pk=self.pk)
+    
+                    # If a new file is uploaded, delete the old file
+                    if (
+                        old_instance.image
+                        and old_instance.image != self.image
+                    ):
+                        old_instance.image.delete(save=False)
+    
+                except type(self).DoesNotExist:
+                    pass
+    
+            super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        # Delete the file from storage before deleting the database record
+        if self.image:
+            self.image.delete(save=False)
+
+        super().delete(*args, **kwargs)
+

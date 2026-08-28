@@ -38,8 +38,8 @@ class AdmissionEnquiryViewSet(PublicCreateOnlyViewSet):
     queryset = AdmissionEnquiry.objects.all()
     serializer_class = AdmissionEnquiryCreateSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(source="admissions_page")
+    # def perform_create(self, serializer):
+    #     serializer.save(source="admissions_page")
 
 
 class AdmissionPopupEnquiryViewSet(PublicCreateOnlyViewSet):
@@ -48,8 +48,6 @@ class AdmissionPopupEnquiryViewSet(PublicCreateOnlyViewSet):
     queryset = AdmissionEnquiry.objects.all()
     serializer_class = AdmissionEnquiryCreateSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(source="popup")
 
 
 class SchoolVisitBookingViewSet(PublicCreateOnlyViewSet):

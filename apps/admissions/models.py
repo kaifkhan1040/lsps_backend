@@ -2,7 +2,7 @@ from django.db import models
 
 from apps.academics.models import ClassCategory
 from apps.core.base import OrderableModel, TimeStampedModel
-
+from apps.core.validators import mobile_validator
 
 class AdmissionProcessStep(OrderableModel):
     """Step-by-step 'Admission Process' shown on the Admissions page."""
@@ -82,44 +82,60 @@ class AdmissionFormDownload(TimeStampedModel):
 
 class AdmissionEnquiry(TimeStampedModel):
     """
-    Captures BOTH:
-      - the 'Online Admission Enquiry' form on the Admissions page, and
-      - leads from the 'Admissions Open' Home page popup (source='popup')
+    Captures:
+      - the 'Apply Now' form on the Admissions page (source='admissions_page'),
+      - leads from the 'Admissions Open' Home page popup (source='popup'), and
+      - (legacy) 'Book a School Visit' submissions (source='school_visit').
     Every submission is visible & manageable in the Admin Panel with a
-    workflow status, and triggers the popup automailer via a signal
-    (see apps/admissions/signals.py) when source == 'popup'.
+    workflow status, and triggers the automailer via a signal
+    (see apps/admissions/signals.py) for every source.
+
+    `interested_in` / `preferred_visit_date` / `child_age` back the 'Apply
+    Now' form fields; they're optional at the model level so the leaner
+    popup/legacy submissions (which don't collect them) still validate.
+    Per-endpoint required-ness is enforced in serializers.py instead.
     """
-    STATUS_CHOICES = [
-        ("new", "New"),
-        ("follow_up", "Follow-up"),
-        ("admitted", "Admitted"),
-        ("closed", "Closed"),
-    ]
-    SOURCE_CHOICES = [
-        ("admissions_page", "Admissions Page Form"),
-        ("popup", "Home Page Popup"),
-        ("school_visit", "Book a School Visit"),
+    INTERESTED_IN_CHOICES = [
+        ("admission_enquiry", "Admission Enquiry"),
+        ("school_visit", "School Visit"),
+        ("both", "Both"),
     ]
 
-    student_name = models.CharField(max_length=150, blank=True)
-    parent_name = models.CharField(max_length=150)
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
+    student_name = models.CharField("Child's Name", max_length=150, blank=True)
+    student_age = models.PositiveSmallIntegerField(
+        "Child Age", null=True, blank=True
+    )
+    parent_name = models.CharField("Parent/Guardian Name", max_length=150)
+    phone = models.CharField(
+        "Mobile Number", max_length=20, validators=[mobile_validator]
+    )
     class_applying_for = models.ForeignKey(
         ClassCategory, on_delete=models.SET_NULL, null=True, blank=True,
         related_name="admission_enquiries",
+        verbose_name="Admission Required For Class",
+    )
+    interested_in = models.CharField(
+        "I am Interested In", max_length=20,
+        choices=INTERESTED_IN_CHOICES, blank=True,
+        default="admission_enquiry",
+    )
+    preferred_visit_date = models.DateField(
+        "Preferred Visit Date", null=True, blank=True,
+        help_text="Required only when 'School Visit' or 'Both' is selected.",
     )
     message = models.TextField(blank=True)
-
-    source = models.CharField(max_length=20, choices=SOURCE_CHOICES, default="admissions_page")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="new")
 
     class Meta:
         verbose_name_plural = "Admission Enquiries"
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.parent_name} - {self.get_status_display()}"
+        return f"{self.parent_name}"
+
+    @property
+    def wants_visit(self):
+        return self.interested_in in ("school_visit", "both")
+
 
 
 class SchoolVisitBooking(TimeStampedModel):

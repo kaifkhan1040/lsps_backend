@@ -45,10 +45,7 @@ class AdmissionEnquiryCreateSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = AdmissionEnquiry
-        fields = [
-            "id", "student_name", "parent_name", "email", "phone",
-            "class_applying_for", "message",
-        ]
+        fields ="__all__"
 
 
 class SchoolVisitBookingCreateSerializer(serializers.ModelSerializer):
