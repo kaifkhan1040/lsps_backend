@@ -56,8 +56,11 @@ class JobApplication(TimeStampedModel):
         JobPosition, on_delete=models.PROTECT,
         related_name="applications", verbose_name="Apply for Position",
     )
-    qualification_experience = models.CharField(
-        "Qualification & Experience", max_length=500
+    qualification = models.CharField(
+        "Qualification", max_length=500
+    )
+    experience=models.CharField(
+        "Experience", max_length=500
     )
     resume = models.FileField(
         "Attach CV/Resume",

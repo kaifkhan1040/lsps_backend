@@ -36,5 +36,5 @@ class JobApplicationCreateSerializer(serializers.ModelSerializer):
         model = JobApplication
         fields = [
             "id", "full_name", "mobile_number", "email", "address",
-            "position", "qualification_experience", "resume",
+            "position", "qualification','experience", "resume",
         ]
