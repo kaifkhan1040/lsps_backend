@@ -3,6 +3,7 @@ from django.db import models
 from apps.academics.models import ClassCategory
 from apps.core.base import OrderableModel, TimeStampedModel
 from apps.core.validators import mobile_validator
+from django_ckeditor_5.fields import CKEditor5Field
 
 class AdmissionProcessStep(OrderableModel):
     """Step-by-step 'Admission Process' shown on the Admissions page."""
@@ -40,7 +41,8 @@ class FeeStructure(models.Model):
 class RequiredDocument(OrderableModel):
     """'Required Documents' checklist for admission."""
     title = models.CharField(max_length=150)
-    description = models.TextField(blank=True)
+    # description = models.TextField(blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
 
     def __str__(self):
         return self.title

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_ckeditor_5",
 
     # 3rd party
     "rest_framework",
@@ -93,7 +94,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
-
+CKEDITOR_5_CONFIGS = {
+    "extends": {
+        "toolbar": [
+            "heading",
+            "|",
+            "bold",
+            "italic",
+            "link",
+            "bulletedList",
+            "numberedList",
+            "|",
+            "blockQuote",
+            "insertTable",
+            "imageUpload",
+            "mediaEmbed",
+            "|",
+            "undo",
+            "redo",
+        ],
+    },
+}
 # ------------------------------------------------------------------
 # Database
 # Answer captured from requirements gathering: SQLite for now.

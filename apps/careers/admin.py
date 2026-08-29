@@ -17,7 +17,7 @@ class JobApplicationAdmin(admin.ModelAdmin):
         "full_name", "position", "mobile_number", "email",
         "status", "created_at",
     )
-    list_editable = ("status",)
+    # list_editable = ("status",)
     list_filter = ("status", "position", "created_at")
     search_fields = ("full_name", "email", "mobile_number")
     readonly_fields = ("created_at", "updated_at")
