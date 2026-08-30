@@ -81,8 +81,8 @@ class ClassCategoryDetailSerializer(serializers.ModelSerializer):
     uniform_guidelines = serializers.SerializerMethodField()
     holiday_homework = serializers.SerializerMethodField()
     worksheets = serializers.SerializerMethodField()
-    gallery = serializers.SerializerMethodField()
-    videos = serializers.SerializerMethodField()
+    # gallery = serializers.SerializerMethodField()
+    # videos = serializers.SerializerMethodField()
     downloads = serializers.SerializerMethodField()
 
     class Meta:
@@ -91,7 +91,8 @@ class ClassCategoryDetailSerializer(serializers.ModelSerializer):
             "id", "name", "slug", "description",
             "curriculum", "academic_calendar", "school_timings",
             "uniform_guidelines", "holiday_homework", "worksheets",
-            "gallery", "videos", "downloads",
+            # "gallery", "videos",
+             "downloads",
         ]
 
     def get_curriculum(self, obj):
@@ -124,15 +125,15 @@ class ClassCategoryDetailSerializer(serializers.ModelSerializer):
             obj.worksheet_set.filter(is_active=True), many=True, context=self.context
         ).data
 
-    def get_gallery(self, obj):
-        return ClassGalleryImageSerializer(
-            obj.classgalleryimage_set.filter(is_active=True), many=True, context=self.context
-        ).data
+    # def get_gallery(self, obj):
+    #     return ClassGalleryImageSerializer(
+    #         obj.classgalleryimage_set.filter(is_active=True), many=True, context=self.context
+    #     ).data
 
-    def get_videos(self, obj):
-        return ClassVideoSerializer(
-            obj.classvideo_set.filter(is_active=True), many=True, context=self.context
-        ).data
+    # def get_videos(self, obj):
+    #     return ClassVideoSerializer(
+    #         obj.classvideo_set.filter(is_active=True), many=True, context=self.context
+    #     ).data
 
     def get_downloads(self, obj):
         return ClassDownloadSerializer(
