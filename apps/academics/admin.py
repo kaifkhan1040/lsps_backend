@@ -1,8 +1,9 @@
 from django.contrib import admin
 
 from apps.academics.models import (
-    AcademicCalendar, ClassCategory, ClassDownload, ClassGalleryImage,
-    ClassVideo, Curriculum, HolidayHomework, SchoolTiming,
+    AcademicCalendar, ClassCategory, ClassDownload, 
+    # ClassGalleryImage,ClassVideo,
+    Curriculum, HolidayHomework, SchoolTiming,
     UniformGuideline, Worksheet,
 )
 
@@ -42,14 +43,14 @@ class WorksheetInline(BaseInline):
     fields = ("title", "subject", "file", "order", "is_active")
 
 
-class ClassGalleryImageInline(BaseInline):
-    model = ClassGalleryImage
-    fields = ("title", "image", "caption", "order", "is_active")
+# class ClassGalleryImageInline(BaseInline):
+#     model = ClassGalleryImage
+#     fields = ("title", "image", "caption", "order", "is_active")
 
 
-class ClassVideoInline(BaseInline):
-    model = ClassVideo
-    fields = ("title", "video_url", "video_file", "order", "is_active")
+# class ClassVideoInline(BaseInline):
+#     model = ClassVideo
+#     fields = ("title", "video_url", "video_file", "order", "is_active")
 
 
 class ClassDownloadInline(BaseInline):
@@ -69,7 +70,8 @@ class ClassCategoryAdmin(admin.ModelAdmin):
     inlines = [
         CurriculumInline, AcademicCalendarInline, SchoolTimingInline,
         UniformGuidelineInline, HolidayHomeworkInline, WorksheetInline,
-        ClassGalleryImageInline, ClassVideoInline, ClassDownloadInline,
+        # ClassGalleryImageInline, ClassVideoInline, 
+        ClassDownloadInline,
     ]
 
 
@@ -98,6 +100,6 @@ _register_standalone(SchoolTiming)
 _register_standalone(UniformGuideline)
 _register_standalone(HolidayHomework, ("academic_year",))
 _register_standalone(Worksheet, ("subject",))
-_register_standalone(ClassGalleryImage)
-_register_standalone(ClassVideo)
+# _register_standalone(ClassGalleryImage)
+# _register_standalone(ClassVideo)
 _register_standalone(ClassDownload)

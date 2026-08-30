@@ -9,7 +9,7 @@ class AdmissionProcessStep(OrderableModel):
     """Step-by-step 'Admission Process' shown on the Admissions page."""
     step_number = models.PositiveIntegerField()
     title = models.CharField(max_length=150)
-    description = models.TextField(blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
 
     class Meta(OrderableModel.Meta):
         ordering = ["step_number", "order"]

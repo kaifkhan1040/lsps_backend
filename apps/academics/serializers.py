@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
 from apps.academics.models import (
-    AcademicCalendar, ClassCategory, ClassDownload, ClassGalleryImage,
-    ClassVideo, Curriculum, HolidayHomework, SchoolTiming,
+    AcademicCalendar, ClassCategory, ClassDownload, 
+    # ClassGalleryImage,ClassVideo,
+    Curriculum, HolidayHomework, SchoolTiming,
     UniformGuideline, Worksheet,
 )
 
@@ -43,16 +44,16 @@ class WorksheetSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "subject", "file", "order"]
 
 
-class ClassGalleryImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ClassGalleryImage
-        fields = ["id", "title", "image", "caption", "order"]
+# class ClassGalleryImageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ClassGalleryImage
+#         fields = ["id", "title", "image", "caption", "order"]
 
 
-class ClassVideoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ClassVideo
-        fields = ["id", "title", "video_url", "video_file", "order"]
+# class ClassVideoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ClassVideo
+#         fields = ["id", "title", "video_url", "video_file", "order"]
 
 
 class ClassDownloadSerializer(serializers.ModelSerializer):

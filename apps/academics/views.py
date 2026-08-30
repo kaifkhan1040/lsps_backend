@@ -1,14 +1,15 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.academics.models import (
-    AcademicCalendar, ClassCategory, ClassDownload, ClassGalleryImage,
-    ClassVideo, Curriculum, HolidayHomework, SchoolTiming,
+    AcademicCalendar, ClassCategory, ClassDownload, 
+    # ClassGalleryImage,ClassVideo, 
+    Curriculum, HolidayHomework, SchoolTiming,
     UniformGuideline, Worksheet,
 )
 from apps.academics.serializers import (
     AcademicCalendarSerializer, ClassCategoryDetailSerializer,
     ClassCategorySerializer, ClassDownloadSerializer,
-    ClassGalleryImageSerializer, ClassVideoSerializer,
+    # ClassGalleryImageSerializer, ClassVideoSerializer,
     CurriculumSerializer, HolidayHomeworkSerializer,
     SchoolTimingSerializer, UniformGuidelineSerializer, WorksheetSerializer,
 )
@@ -77,16 +78,16 @@ class WorksheetViewSet(_ClassFilteredReadOnlyViewSet):
     serializer_class = WorksheetSerializer
 
 
-class ClassGalleryImageViewSet(_ClassFilteredReadOnlyViewSet):
-    queryset_model = ClassGalleryImage
-    queryset = ClassGalleryImage.objects.all()
-    serializer_class = ClassGalleryImageSerializer
+# class ClassGalleryImageViewSet(_ClassFilteredReadOnlyViewSet):
+#     queryset_model = ClassGalleryImage
+#     queryset = ClassGalleryImage.objects.all()
+#     serializer_class = ClassGalleryImageSerializer
 
 
-class ClassVideoViewSet(_ClassFilteredReadOnlyViewSet):
-    queryset_model = ClassVideo
-    queryset = ClassVideo.objects.all()
-    serializer_class = ClassVideoSerializer
+# class ClassVideoViewSet(_ClassFilteredReadOnlyViewSet):
+#     queryset_model = ClassVideo
+#     queryset = ClassVideo.objects.all()
+#     serializer_class = ClassVideoSerializer
 
 
 class ClassDownloadViewSet(_ClassFilteredReadOnlyViewSet):

@@ -2,14 +2,14 @@ from django.db import models
 from django.utils.text import slugify
 
 from apps.core.base import OrderableModel, TimeStampedModel
-
+from django_ckeditor_5.fields import CKEditor5Field
 
 class ClassCategory(OrderableModel):
     """Dynamic class categories: Pre-Nursery, Nursery, LKG, UKG,
     Grade I-V ... Admin can add/edit/delete/reorder freely."""
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=120, unique=True, blank=True)
-    description = models.TextField(blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
 
     class Meta(OrderableModel.Meta):
         verbose_name = "Class Category"
@@ -43,7 +43,7 @@ class ClassContentBase(TimeStampedModel):
 
 
 class Curriculum(ClassContentBase):
-    description = models.TextField(blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
     file = models.FileField(upload_to="academics/curriculum/", blank=True, null=True)
 
 
@@ -53,11 +53,11 @@ class AcademicCalendar(ClassContentBase):
 
 
 class SchoolTiming(ClassContentBase):
-    description = models.TextField(help_text="e.g. 8:00 AM - 1:30 PM, Mon-Sat")
+    description = CKEditor5Field("Description", config_name="extends")
 
 
 class UniformGuideline(ClassContentBase):
-    description = models.TextField(blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
     image = models.ImageField(upload_to="academics/uniform/", blank=True, null=True)
 
 
@@ -71,14 +71,14 @@ class Worksheet(ClassContentBase):
     file = models.FileField(upload_to="academics/worksheets/", blank=True, null=True)
 
 
-class ClassGalleryImage(ClassContentBase):
-    image = models.ImageField(upload_to="academics/gallery/")
-    caption = models.CharField(max_length=200, blank=True)
+# class ClassGalleryImage(ClassContentBase):
+#     image = models.ImageField(upload_to="academics/gallery/")
+#     caption = models.CharField(max_length=200, blank=True)
 
 
-class ClassVideo(ClassContentBase):
-    video_url = models.URLField(blank=True, help_text="YouTube/Vimeo embed link.")
-    video_file = models.FileField(upload_to="academics/videos/", blank=True, null=True)
+# class ClassVideo(ClassContentBase):
+#     video_url = models.URLField(blank=True, help_text="YouTube/Vimeo embed link.")
+#     video_file = models.FileField(upload_to="academics/videos/", blank=True, null=True)
 
 
 class ClassDownload(ClassContentBase):
