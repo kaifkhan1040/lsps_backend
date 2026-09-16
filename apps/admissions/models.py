@@ -57,6 +57,10 @@ class AdmissionFormDownload(TimeStampedModel):
     def __str__(self):
         return self.title
     
+    class Meta:
+        verbose_name = "Admission Form"
+        verbose_name_plural = "Admission Forms"
+    
     def save(self, *args, **kwargs):
         # Get the existing database record before saving the new one
         if self.pk:

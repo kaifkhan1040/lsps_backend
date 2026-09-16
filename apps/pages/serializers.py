@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from apps.pages.models import (
     AboutUs, ChairmanMessage, HomeContent, PrincipalMessage,
-    QuickLink, SchoolHighlight, WhyChooseUs,
+    QuickLink, SchoolHighlight, WhyChooseUs,History,Infrastructure
 )
 
 
@@ -23,14 +23,35 @@ class PrincipalMessageSerializer(serializers.ModelSerializer):
         model = PrincipalMessage
         fields = ["name", "designation", "photo", "short_message", "full_message"]
 
+class HistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = History
+        fields = "__all__"
+
+class InfrastructureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Infrastructure
+        fields = "__all__"
 
 class AboutUsSerializer(serializers.ModelSerializer):
+    history = serializers.SerializerMethodField()
+    infrastructure = serializers.SerializerMethodField()
     class Meta:
         model = AboutUs
         fields = [
             "introduction", "vision", "mission", "history",
-            "infrastructure_summary", "banner_image",
+            "infrastructure",
+              "banner_image",
         ]
+    def get_history(self, obj):
+            return HistorySerializer(
+                obj.history_set.filter(is_active=True), many=True, context=self.context
+            ).data
+    
+    def get_infrastructure(self, obj):
+                return InfrastructureSerializer(
+                    obj.infrastructure_set.filter(is_active=True), many=True, context=self.context
+                ).data
 
 
 class SchoolHighlightSerializer(serializers.ModelSerializer):

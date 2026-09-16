@@ -6,17 +6,18 @@ from apps.core.models import SingletonModel
 
 class BannerSlide(OrderableModel):
     """Dynamic, auto-sliding Home page banner."""
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,blank=True,null=True)
     subtitle = models.CharField(max_length=300, blank=True)
     file = models.FileField(upload_to="sliders/banners/")
 
     CTA_CHOICES = [
+        ("n/a", "N/A"),
         ("apply_now", "Apply Now"),
         ("book_visit", "Book a School Visit"),
         ("contact_us", "Contact Us"),
         ("custom", "Custom"),
     ]
-    cta_type = models.CharField(max_length=20, choices=CTA_CHOICES, default="apply_now")
+    cta_type = models.CharField(max_length=20, choices=CTA_CHOICES, default="n/a")
     cta_text = models.CharField(max_length=50, blank=True)
     cta_link = models.CharField(max_length=255, blank=True)
 

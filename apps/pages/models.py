@@ -2,6 +2,7 @@ from django.db import models
 
 from apps.core.base import OrderableModel
 from apps.core.models import SingletonModel
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class HomeContent(SingletonModel):
@@ -50,6 +51,7 @@ class ChairmanMessage(SingletonModel):
     photo = models.ImageField(upload_to="pages/chairman/", blank=True, null=True)
     short_message = models.TextField(help_text="Short excerpt shown on the Home page.")
     full_message = models.TextField(help_text="Full message shown on the About Us page.")
+    is_enabled = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Chairman's Message"
@@ -82,6 +84,7 @@ class PrincipalMessage(SingletonModel):
     photo = models.ImageField(upload_to="pages/principal/", blank=True, null=True)
     short_message = models.TextField(help_text="Short excerpt shown on the Home page.")
     full_message = models.TextField(help_text="Full message shown on the About Us page.")
+    is_enabled = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Principal's Message"
@@ -112,11 +115,11 @@ class AboutUs(SingletonModel):
     """About Us page: introduction, vision/mission, history, and a
     freeform infrastructure & facilities summary (the detailed,
     itemised facilities live in the `infrastructure` app)."""
-    introduction = models.TextField(blank=True)
-    vision = models.TextField(blank=True)
-    mission = models.TextField(blank=True)
-    history = models.TextField(blank=True)
-    infrastructure_summary = models.TextField(blank=True)
+    introduction = CKEditor5Field("introduction", config_name="extends")
+    vision = CKEditor5Field("vision", config_name="extends")
+    mission = CKEditor5Field("mission", config_name="extends")
+    # history = models.TextField(blank=True)
+    # infrastructure_summary = models.TextField(blank=True)
     banner_image = models.ImageField(upload_to="pages/about/", blank=True, null=True)
 
     class Meta:
@@ -142,6 +145,42 @@ class AboutUs(SingletonModel):
                 except type(self).DoesNotExist:
                     pass
             super().save(*args, **kwargs)
+
+class History(OrderableModel):
+    about_us = models.ForeignKey(AboutUs,on_delete=models.CASCADE)
+    year = models.CharField(max_length=4)
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+
+class Infrastructure(OrderableModel):
+    about_us = models.ForeignKey(AboutUs,on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="pages/Infrastructure/", blank=True, null=True)
+    title = models.CharField(max_length=150)
+    description = models.TextField(blank=True)
+
+    def save(self, *args, **kwargs):
+                # Get the existing database record before saving the new one
+                if self.pk:
+                    try:
+                        old_instance = type(self).objects.get(pk=self.pk)
+        
+                        # If a new file is uploaded, delete the old file
+                        if (
+                            old_instance.image
+                            and old_instance.image != self.image
+                        ):
+                            old_instance.image.delete(save=False)
+        
+                    except type(self).DoesNotExist:
+                        pass
+                super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+            # Delete the file from storage before deleting the database record
+            if self.image:
+                self.image.delete(save=False)
+    
+            super().delete(*args, **kwargs)
 
 
 class SchoolHighlight(OrderableModel):

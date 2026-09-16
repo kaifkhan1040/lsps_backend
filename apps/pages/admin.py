@@ -2,9 +2,21 @@ from django.contrib import admin
 
 from apps.pages.models import (
     AboutUs, ChairmanMessage, HomeContent, PrincipalMessage,
-    QuickLink, SchoolHighlight, WhyChooseUs,
+    QuickLink, SchoolHighlight, WhyChooseUs,History,Infrastructure
 )
 
+class BaseInline(admin.TabularInline):
+    extra = 0
+    show_change_link = True
+
+
+class HistoryInline(BaseInline):
+    model = History
+    fields = ("year", "title", "description")
+
+class InfrastructureInline(BaseInline):
+    model = Infrastructure
+    fields = ("image", "title", "description")
 
 class SingletonAdminMixin:
     def has_add_permission(self, request):
@@ -30,7 +42,9 @@ class PrincipalMessageAdmin(SingletonAdminMixin, admin.ModelAdmin):
 
 @admin.register(AboutUs)
 class AboutUsAdmin(SingletonAdminMixin, admin.ModelAdmin):
-    pass
+    inlines = [
+            HistoryInline,InfrastructureInline
+        ]
 
 
 @admin.register(SchoolHighlight)
