@@ -4,7 +4,7 @@ from apps.academics.models import (
     AcademicCalendar, ClassCategory, ClassDownload, 
     # ClassGalleryImage,ClassVideo,
     Curriculum, HolidayHomework, SchoolTiming,
-    UniformGuideline, Worksheet,
+    UniformGuideline, Worksheet,Academics,SubAcademics,AcademicsItem
 )
 
 
@@ -103,3 +103,6 @@ _register_standalone(Worksheet, ("subject",))
 # _register_standalone(ClassGalleryImage)
 # _register_standalone(ClassVideo)
 _register_standalone(ClassDownload)
+admin.site.register(Academics)
+admin.site.register(SubAcademics)
+admin.site.register(AcademicsItem)

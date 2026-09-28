@@ -5,7 +5,7 @@ from apps.academics.views import (
     # ClassGalleryImageViewSet, ClassVideoViewSet,
     CurriculumViewSet,
     HolidayHomeworkViewSet, SchoolTimingViewSet, UniformGuidelineViewSet,
-    WorksheetViewSet,
+    WorksheetViewSet,AcademicsViewSet
 )
 
 router = DefaultRouter()
@@ -19,5 +19,10 @@ router.register("worksheets", WorksheetViewSet, basename="worksheet")
 # router.register("gallery", ClassGalleryImageViewSet, basename="class-gallery")
 # router.register("videos", ClassVideoViewSet, basename="class-video")
 router.register("downloads", ClassDownloadViewSet, basename="class-download")
+router.register(
+    r"academics",
+    AcademicsViewSet,
+    basename="academics"
+)
 
 urlpatterns = router.urls

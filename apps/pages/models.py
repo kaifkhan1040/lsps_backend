@@ -212,3 +212,47 @@ class QuickLink(OrderableModel):
 
     def __str__(self):
         return self.title
+
+
+# models.py
+
+from django.db import models
+
+
+class HomeSectionCard(models.Model):
+
+    SECTION_CHOICES = [
+        ("about", "About Us"),
+        ("academics", "Academics"),
+        ("admissions", "Admissions"),
+        ("gallery", "Gallery"),
+        ("news_events", "News & Events"),
+        ("contact", "Contact Us"),
+    ]
+
+    section = models.CharField(
+        max_length=30,
+        choices=SECTION_CHOICES,
+        unique=True
+    )
+
+    title = models.CharField(max_length=100)
+
+    description = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    image = models.ImageField(
+        upload_to="home/cards/",
+        blank=True,
+        null=True
+    )
+
+    # is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    # def __str__(self):
+    #     return self.section

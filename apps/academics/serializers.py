@@ -4,7 +4,7 @@ from apps.academics.models import (
     AcademicCalendar, ClassCategory, ClassDownload, 
     # ClassGalleryImage,ClassVideo,
     Curriculum, HolidayHomework, SchoolTiming,
-    UniformGuideline, Worksheet,
+    UniformGuideline, Worksheet,Academics,SubAcademics,AcademicsItem
 )
 
 
@@ -139,3 +139,52 @@ class ClassCategoryDetailSerializer(serializers.ModelSerializer):
         return ClassDownloadSerializer(
             obj.classdownload_set.filter(is_active=True), many=True, context=self.context
         ).data
+
+class AcademicsItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AcademicsItem
+        fields = [
+            "id",
+            "name",
+            "file",
+            "description",
+            "banner_image",
+        ]
+
+
+class SubAcademicsSerializer(serializers.ModelSerializer):
+
+    items = AcademicsItemSerializer(
+        many=True,
+        read_only=True
+    )
+
+    class Meta:
+        model = SubAcademics
+        fields = [
+            "id",
+            "name",
+            "file",
+            "description",
+            "banner_image",
+            "items",
+        ]
+
+
+class AcademicsSerializer(serializers.ModelSerializer):
+
+    subacademics = SubAcademicsSerializer(
+        many=True,
+        read_only=True
+    )
+
+    class Meta:
+        model = Academics
+        fields = [
+            "id",
+            "name",
+            "file",
+            "description",
+            "banner_image",
+            "subacademics",
+        ]

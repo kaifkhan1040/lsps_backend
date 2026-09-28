@@ -4,12 +4,13 @@ from rest_framework.views import APIView
 from apps.core.mixins import ActiveOnlyReadOnlyViewSet
 from apps.pages.models import (
     AboutUs, ChairmanMessage, HomeContent, PrincipalMessage,
-    QuickLink, SchoolHighlight, WhyChooseUs,
+    QuickLink, SchoolHighlight, WhyChooseUs,HomeSectionCard
 )
+from rest_framework.viewsets import ModelViewSet
 from apps.pages.serializers import (
     AboutUsSerializer, ChairmanMessageSerializer, HomeContentSerializer,
     PrincipalMessageSerializer, QuickLinkSerializer,
-    SchoolHighlightSerializer, WhyChooseUsSerializer,
+    SchoolHighlightSerializer, WhyChooseUsSerializer,HomeSectionCardSerializer
 )
 
 
@@ -56,3 +57,7 @@ class WhyChooseUsViewSet(ActiveOnlyReadOnlyViewSet):
 class QuickLinkViewSet(ActiveOnlyReadOnlyViewSet):
     queryset = QuickLink.objects.all()
     serializer_class = QuickLinkSerializer
+
+class HomeSectionCardViewSet(ModelViewSet):
+    queryset = HomeSectionCard.objects.all()
+    serializer_class = HomeSectionCardSerializer

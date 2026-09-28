@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from apps.pages.models import (
     AboutUs, ChairmanMessage, HomeContent, PrincipalMessage,
-    QuickLink, SchoolHighlight, WhyChooseUs,History,Infrastructure
+    QuickLink, SchoolHighlight, WhyChooseUs,History,Infrastructure,HomeSectionCard
 )
 
 class BaseInline(admin.TabularInline):
@@ -66,3 +66,21 @@ class WhyChooseUsAdmin(admin.ModelAdmin):
 #     list_display = ("title", "url", "order", "is_active")
 #     list_editable = ("order", "is_active")
 #     search_fields = ("title",)
+
+@admin.register(HomeSectionCard)
+class HomeSectionCardAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "section",
+        "title",
+        "updated_at",
+    )
+
+    list_filter = (
+        "section",
+    )
+
+    search_fields = (
+        "title",
+        "description",
+    )

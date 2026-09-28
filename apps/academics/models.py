@@ -85,3 +85,34 @@ class ClassDownload(ClassContentBase):
     """Generic per-class PDF/download not covered by a more specific
     model above (e.g. syllabus overview, book list)."""
     file = models.FileField(upload_to="academics/downloads/")
+
+
+class Academics(models.Model):
+    name = models.CharField(max_length=150)
+    file= models.FileField(upload_to='academics/main/',null=True,blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
+    banner_image = models.ImageField(upload_to="academics/Academics/", blank=True, null=True)
+
+
+    def __str__(self):
+        return self.name
+
+class SubAcademics(models.Model):
+    academics = models.ForeignKey(Academics,on_delete=models.CASCADE,related_name="subacademics")
+    name = models.CharField(max_length=150)
+    file= models.FileField(upload_to='academics/sub/',null=True,blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
+    banner_image = models.ImageField(upload_to="academics/SubAcademics/", blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+class AcademicsItem(models.Model):
+    subacademics =models.ForeignKey(SubAcademics,on_delete=models.CASCADE,related_name="items")
+    name = models.CharField(max_length=150)
+    file= models.FileField(upload_to='academics/main/',null=True,blank=True)
+    description = CKEditor5Field("Description", config_name="extends")
+    banner_image = models.ImageField(upload_to="academics/AcademicsItem/", blank=True, null=True)
+
+    def __str__(self):
+        return self.name

@@ -4,7 +4,7 @@ from apps.academics.models import (
     AcademicCalendar, ClassCategory, ClassDownload, 
     # ClassGalleryImage,ClassVideo, 
     Curriculum, HolidayHomework, SchoolTiming,
-    UniformGuideline, Worksheet,
+    UniformGuideline, Worksheet,Academics
 )
 from apps.academics.serializers import (
     AcademicCalendarSerializer, ClassCategoryDetailSerializer,
@@ -12,8 +12,16 @@ from apps.academics.serializers import (
     # ClassGalleryImageSerializer, ClassVideoSerializer,
     CurriculumSerializer, HolidayHomeworkSerializer,
     SchoolTimingSerializer, UniformGuidelineSerializer, WorksheetSerializer,
+    AcademicsSerializer
 )
 
+class AcademicsViewSet(ReadOnlyModelViewSet):
+
+    queryset = Academics.objects.prefetch_related(
+        "subacademics__items"
+    )
+
+    serializer_class = AcademicsSerializer
 
 class ClassCategoryViewSet(ReadOnlyModelViewSet):
     """

@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from apps.pages.models import (
     AboutUs, ChairmanMessage, HomeContent, PrincipalMessage,
-    QuickLink, SchoolHighlight, WhyChooseUs,History,Infrastructure
+    QuickLink, SchoolHighlight, WhyChooseUs,History,Infrastructure,HomeSectionCard
 )
 
 
@@ -70,3 +70,21 @@ class QuickLinkSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuickLink
         fields = ["id", "title", "url", "icon", "order"]
+
+class HomeSectionCardSerializer(serializers.ModelSerializer):
+
+    image = serializers.ImageField(
+        required=False,
+        allow_null=True
+    )
+
+    class Meta:
+        model = HomeSectionCard
+        fields = [
+            "id",
+            "section",
+            "title",
+            "description",
+            "image",
+            # "is_active",
+        ]
