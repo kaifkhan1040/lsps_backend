@@ -58,51 +58,51 @@ class ClassDownloadInline(BaseInline):
     fields = ("title", "file", "order", "is_active")
 
 
-@admin.register(ClassCategory)
-class ClassCategoryAdmin(admin.ModelAdmin):
-    """Manage a class (e.g. 'Grade II') and ALL of its content --
-    curriculum, calendar, timings, uniform, homework, worksheets,
-    gallery, videos and downloads -- from a single admin page."""
-    list_display = ("name", "slug", "order", "is_active")
-    list_editable = ("order", "is_active")
-    prepopulated_fields = {"slug": ("name",)}
-    search_fields = ("name",)
-    inlines = [
-        CurriculumInline, AcademicCalendarInline, SchoolTimingInline,
-        UniformGuidelineInline, HolidayHomeworkInline, WorksheetInline,
-        # ClassGalleryImageInline, ClassVideoInline, 
-        ClassDownloadInline,
-    ]
+# @admin.register(ClassCategory)
+# class ClassCategoryAdmin(admin.ModelAdmin):
+#     """Manage a class (e.g. 'Grade II') and ALL of its content --
+#     curriculum, calendar, timings, uniform, homework, worksheets,
+#     gallery, videos and downloads -- from a single admin page."""
+#     list_display = ("name", "slug", "order", "is_active")
+#     list_editable = ("order", "is_active")
+#     prepopulated_fields = {"slug": ("name",)}
+#     search_fields = ("name",)
+#     inlines = [
+#         CurriculumInline, AcademicCalendarInline, SchoolTimingInline,
+#         UniformGuidelineInline, HolidayHomeworkInline, WorksheetInline,
+#         # ClassGalleryImageInline, ClassVideoInline, 
+#         ClassDownloadInline,
+#     ]
 
 
-def _register_standalone(model, extra_list_fields=()):
-    """Also register each content model on its own for quick
-    bulk edits / filtering across classes, independent of the
-    ClassCategory inline view above."""
-    list_display = ("title", "class_category", *extra_list_fields, "order", "is_active")
+# def _register_standalone(model, extra_list_fields=()):
+#     """Also register each content model on its own for quick
+#     bulk edits / filtering across classes, independent of the
+#     ClassCategory inline view above."""
+#     list_display = ("title", "class_category", *extra_list_fields, "order", "is_active")
 
-    admin_class = type(
-        f"{model.__name__}Admin",
-        (admin.ModelAdmin,),
-        {
-            "list_display": list_display,
-            "list_editable": ("order", "is_active"),
-            "list_filter": ("class_category", "is_active"),
-            "search_fields": ("title",),
-        },
-    )
-    admin.site.register(model, admin_class)
+#     admin_class = type(
+#         f"{model.__name__}Admin",
+#         (admin.ModelAdmin,),
+#         {
+#             "list_display": list_display,
+#             "list_editable": ("order", "is_active"),
+#             "list_filter": ("class_category", "is_active"),
+#             "search_fields": ("title",),
+#         },
+#     )
+#     admin.site.register(model, admin_class)
 
 
-_register_standalone(Curriculum)
-_register_standalone(AcademicCalendar, ("academic_year",))
-_register_standalone(SchoolTiming)
-_register_standalone(UniformGuideline)
-_register_standalone(HolidayHomework, ("academic_year",))
-_register_standalone(Worksheet, ("subject",))
-# _register_standalone(ClassGalleryImage)
-# _register_standalone(ClassVideo)
-_register_standalone(ClassDownload)
+# _register_standalone(Curriculum)
+# _register_standalone(AcademicCalendar, ("academic_year",))
+# _register_standalone(SchoolTiming)
+# _register_standalone(UniformGuideline)
+# _register_standalone(HolidayHomework, ("academic_year",))
+# _register_standalone(Worksheet, ("subject",))
+# # _register_standalone(ClassGalleryImage)
+# # _register_standalone(ClassVideo)
+# _register_standalone(ClassDownload)
 admin.site.register(Academics)
 admin.site.register(SubAcademics)
 admin.site.register(AcademicsItem)
