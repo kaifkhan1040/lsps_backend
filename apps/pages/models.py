@@ -223,7 +223,7 @@ class HomeSectionCard(models.Model):
 
     SECTION_CHOICES = [
         ("about", "About Us"),
-        ("academics", "Academics"),
+        ("careers", "Careers"),
         ("admissions", "Admissions"),
         ("gallery", "Gallery"),
         ("news_events", "News & Events"),
