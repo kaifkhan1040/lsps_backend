@@ -22,7 +22,10 @@ class BannerSlide(OrderableModel):
     cta_link = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return self.title
+        if self.title and self.title.strip():
+            return self.title
+        # Fallback to showing the object ID
+        return f"Banner Slide Object ({self.id})"
 
     def save(self, *args, **kwargs):
         # Get the existing database record before saving the new one
