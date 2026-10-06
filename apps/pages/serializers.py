@@ -15,13 +15,13 @@ class HomeContentSerializer(serializers.ModelSerializer):
 class ChairmanMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChairmanMessage
-        fields = ["name", "designation", "photo", "short_message", "full_message"]
+        fields = ["name", "designation", "photo", "short_message", "full_message","is_enabled"]
 
 
 class PrincipalMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PrincipalMessage
-        fields = ["name", "designation", "photo", "short_message", "full_message"]
+        fields = ["name", "designation", "photo", "short_message", "full_message","is_enabled"]
 
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
